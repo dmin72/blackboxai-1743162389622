@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Eventi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold text-gray-900">Calendario Eventi</h1>
+                    <button id="addEventBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center gap-2">
+                        <i class="fas fa-plus"></i>
+                        Nuovo Evento
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Calendar Navigation -->
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex items-center gap-4">
+                    <button id="prevMonth" class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2 id="currentMonth" class="text-xl font-semibold text-gray-900"></h2>
+                    <button id="nextMonth" class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="flex gap-2">
+                    <button id="todayBtn" class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded">
+                        Oggi
+                    </button>
+                </div>
+            </div>
+
+                <!-- Calendar Grid -->
+                <div class="bg-white rounded-lg shadow">
+                    <!-- Days of Week -->
+                    <div class="calendar-header border-b">
+                        <div class="text-center py-2 text-sm font-semibold text-gray-900">Dom</div>
+                        <div class="text-center py-2 text-sm font-semibold text-gray-900">Lun</div>
+                        <div class="text-center py-2 text-sm font-semibold text-gray-900">Mar</div>
+                        <div class="text-center py-2 text-sm font-semibold text-gray-900">Mer</div>
+                        <div class="text-center py-2 text-sm font-semibold text-gray-900">Gio</div>
+                        <div class="text-center py-2 text-sm font-semibold text-gray-900">Ven</div>
+                        <div class="text-center py-2 text-sm font-semibold text-gray-900">Sab</div>
+                    </div>
+                    <!-- Calendar Days -->
+                    <div id="calendarGrid" class="calendar-grid bg-gray-200">
+                        <!-- Days will be dynamically inserted here -->
+                    </div>
+                </div>
+        </main>
+    </div>
+
+    <!-- Modal per Nuovo/Modifica Evento -->
+    <div id="eventModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalTitle" class="text-lg font-semibold text-gray-900">Nuovo Evento</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="eventForm">
+                <input type="hidden" id="eventId">
+                <div class="space-y-4">
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700">Titolo</label>
+                        <input type="text" id="title" name="title" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700">Descrizione</label>
+                        <textarea id="description" name="description" rows="3"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="startTime" class="block text-sm font-medium text-gray-700">Data e Ora Inizio</label>
+                            <input type="datetime-local" id="startTime" name="startTime" required
+                                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label for="endTime" class="block text-sm font-medium text-gray-700">Data e Ora Fine</label>
+                            <input type="datetime-local" id="endTime" name="endTime" required
+                                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="location" class="block text-sm font-medium text-gray-700">Luogo</label>
+                        <input type="text" id="location" name="location"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="color" class="block text-sm font-medium text-gray-700">Colore</label>
+                        <select id="color" name="color"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <option value="#3B82F6">Blu</option>
+                            <option value="#10B981">Verde</option>
+                            <option value="#EF4444">Rosso</option>
+                            <option value="#F59E0B">Arancione</option>
+                            <option value="#8B5CF6">Viola</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end gap-3">
+                    <button type="button" id="deleteEventBtn" class="hidden px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700">
+                        Elimina
+                    </button>
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                        Salva
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2"></div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
