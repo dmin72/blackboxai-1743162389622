@@ -1,0 +1,34 @@
+{
+  "events": [
+    {
+      "id": "1743159500986",
+      "title": "Dentista",
+      "description": "Appuntamento dal dentista",
+      "startTime": "2025-04-16T16:30",
+      "endTime": "2025-04-16T17:30",
+      "location": "Studio Iannarilli",
+      "color": "#3B82F6",
+      "createdAt": "2025-03-28T10:58:20.986Z"
+    },
+    {
+      "id": "1743159864821",
+      "title": "Riunione di Progetto",
+      "description": "Discussione sullo stato di avanzamento del progetto e pianificazione delle prossime attività",
+      "startTime": "2025-03-28T11:15",
+      "endTime": "2025-03-28T12:15",
+      "location": "Sala Riunioni A - Piano 2",
+      "color": "#3B82F6",
+      "createdAt": "2025-03-28T11:04:24.821Z"
+    },
+    {
+      "id": "1743160976128",
+      "title": "Meeting di Team",
+      "description": "Aggiornamento settimanale sullo stato dei progetti in corso",
+      "startTime": "2025-03-28T11:30",
+      "endTime": "2025-03-28T12:30",
+      "location": "Sala Meeting B - Piano 3",
+      "color": "#3B82F6",
+      "createdAt": "2025-03-28T11:22:56.128Z"
+    }
+  ]
+}
